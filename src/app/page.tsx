@@ -4,109 +4,43 @@ import styles from './page.module.css'
 import { Provider } from "react-redux";
 import store from "./store";
 import { useState } from "react";
-import Container from "../components/Container";
+import Container from "./components/Container";
+import UserGrid from './components/UserGrid';
 
 export default function Home() {
-  const [click, setClick] = useState(false);
+    const [click, setClick] = useState(false);
 
-  function handleClick() {
-    setClick(!click)
-    console.log('sim');
-  }
+    function handleClick() {
+        setClick(!click)
+        fetch('https://reqres.in/api/users')
+            .then(response => response.json())
+            .then(data => {
+                const users = data.data;
+                console.log(users);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+    }
 
-  return (
-    <Provider store={store}>
-      <Container background={click ? 'black' : 'red'}>
-        <main className={styles.main}>
-          <div className={styles.description}>
-            <button onClick={handleClick}>Clicar</button>
-            <p>
-              Get started by editing&nbsp;
-              <code className={styles.code}>src/app/page.tsx</code>
-            </p>
-            <div>
-              <a
-                href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                By{' '}
-                <Image
-                  src="/vercel.svg"
-                  alt="Vercel Logo"
-                  className={styles.vercelLogo}
-                  width={100}
-                  height={24}
-                  priority
-                />
-              </a>
-            </div>
-          </div>
+    return (
+        <Provider store={store}>
+            <Container background={click ? '#fefefe' : 'steelblue'}>
+                <main className={styles.main}>
+                    <div className={styles.description}>
+                        <button onClick={handleClick}>styles test</button>
+                        <p>
+                            <a href="/login">{'Login'}</a>
+                        </p>
+                      
+                    </div>
 
-          <div className={styles.center}>
-            <Image
-              className={styles.logo}
-              src="/next.svg"
-              alt="Next.js Logo"
-              width={180}
-              height={37}
-              priority
-            />
-          </div>
-
-          <div className={styles.grid}>
-            <a
-              href="https://beta.nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              className={styles.card}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h2>
-                Docs <span>-&gt;</span>
-              </h2>
-              <p>Find in-depth information about Next.js features and API.</p>
-            </a>
-
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              className={styles.card}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h2>
-                Learn <span>-&gt;</span>
-              </h2>
-              <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-            </a>
-
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              className={styles.card}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h2>
-                Templates <span>-&gt;</span>
-              </h2>
-              <p>Explore the Next.js 13 playground.</p>
-            </a>
-
-            <a
-              href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-              className={styles.card}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <h2>
-                Deploy <span>-&gt;</span>
-              </h2>
-              <p>
-                Instantly deploy your Next.js site to a shareable URL with Vercel.
-              </p>
-            </a>
-          </div>
-        </main>
-      </Container>
-    </Provider>
-  )
+       
+                    <div className={styles.description}>
+                        <UserGrid />
+                    </div>
+                </main>
+            </Container>
+        </Provider>
+    )
 }
