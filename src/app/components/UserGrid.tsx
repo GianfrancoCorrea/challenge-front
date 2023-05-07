@@ -5,6 +5,8 @@ import User from '@/shared/interfaces/user.interface';
 import { putUserById } from '@/shared/services/APIService';
 import { RootState, useAppDispatch, useAppSelector } from '../redux/store';
 import { fetchUsers, updateUser } from '../redux/usersSlice';
+import UserEditForm from './UserEditForm';
+import { SidebarTitle } from './Sidebar.styled';
 
 const UserGrid = () => {
 
@@ -66,10 +68,11 @@ return (
         {selectedUser && (
             <Sidebar
                 isOpen={isSidebarOpen}
-                user={selectedUser}
-                updateUser={handleUpdateUser}
                 closeSidebar={closeSidebar}
-            />
+            >
+                <SidebarTitle>Edit User</SidebarTitle>
+                <UserEditForm user={selectedUser} updateUser={handleUpdateUser} />
+            </Sidebar>
         )}
     </>
 );
