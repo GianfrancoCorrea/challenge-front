@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { UserAvatar, UserCard, UserEmail, UserGridContainer, UserName } from './UserGrid.styled';
 import Sidebar from './Sidebar';
 import User from '@/shared/interfaces/user.interface';
-import { putUserById } from '@/shared/services/APIService';
 import { RootState, useAppDispatch, useAppSelector } from '../redux/store';
 import { fetchUsers, updateUser } from '../redux/usersSlice';
 import UserEditForm from './UserEditForm';
 import { SidebarTitle } from './Sidebar.styled';
+import UserPosts from './UserPosts';
 
 const UserGrid = () => {
 
@@ -55,6 +55,8 @@ const UserGrid = () => {
                 >
                     <SidebarTitle>Edit User</SidebarTitle>
                     <UserEditForm user={selectedUser} updateUser={handleUpdateUser} />
+                    <br />
+                    <UserPosts userId={selectedUser.id} />
                 </Sidebar>
             )}
         </>

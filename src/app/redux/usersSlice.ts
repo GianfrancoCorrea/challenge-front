@@ -2,23 +2,25 @@ import User from '@/shared/interfaces/user.interface';
 import { getUsers, putUserById } from '@/shared/services/APIService';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Define the type for the initial state
+// types & initial state for the slice
 interface UsersState {
     data: User[] | null;
     loading: boolean;
     error: string | null;
 }
 
-// Define the initial state
 const initialState: UsersState = {
     data: null,
     loading: false,
     error: null,
 };
 
+// async actions
+export const fetchUsers = createAsyncThunk(
+    'users/fetchUsers',
+    () => getUsers()
+);
 
-// Define an async actions to make API calls
-export const fetchUsers = createAsyncThunk('users/fetchUsers', () => getUsers());
 export const updateUser = createAsyncThunk(
     'users/updateUser',
     (newUserData: User) => {
