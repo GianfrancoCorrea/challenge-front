@@ -1,7 +1,7 @@
 'use client';
 import { Provider } from "react-redux";
 import styles from '../page.module.css'
-import store from "../store";
+import store from "../redux/store";
 import Form from './components/LoginForm';
 
 

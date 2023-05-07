@@ -1,16 +1,21 @@
-import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import usersReducer from './usersSlice';
 
 // Define the type of state of your application
-interface RootState {
-  // Here you can define the initial state of your application
-}
+export type RootState = ReturnType<typeof rootReducer>;
+
+// Combine the reducers of all the slices
+export const rootReducer = combineReducers({
+  users: usersReducer,
+});
 
 // Create your store with the initial state and necessary actions
 const store = configureStore({
   reducer: {
     // Here you can define your reducers
+    users: usersReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

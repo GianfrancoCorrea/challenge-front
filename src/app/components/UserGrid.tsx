@@ -2,11 +2,17 @@ import { useEffect, useState } from 'react';
 import { UserAvatar, UserCard, UserEmail, UserGridContainer, UserName } from './UserGrid.styled';
 import Sidebar from './Sidebar';
 import User from '@/shared/interfaces/user.interface';
-import { getUsers, putUserById } from '@/shared/services/APIService';
+import { putUserById } from '@/shared/services/APIService';
+import { RootState, useAppDispatch, useAppSelector } from '../redux/store';
+import { fetchUsers, updateUser } from '../redux/usersSlice';
 
 const UserGrid = () => {
 
-    const [users, setUsers] = useState<User[]>([]);
+    const dispatch = useAppDispatch();
+    const usersData = useAppSelector((state: RootState) => state.users.data as User[]);
+    const loading = useAppSelector((state: RootState) => state.users.loading);
+    const error = useAppSelector((state: RootState) => state.users.error);
+
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
@@ -20,66 +26,52 @@ const UserGrid = () => {
         setSelectedUser(null);
     };
 
-
-    const handleUpdateUser = ({ id, email, first_name, last_name}: User) => {
+    const handleUpdateUser = (newUserData: User) => {
         // PUT /api/users/{id}
         const body = {
-            email,
-            first_name,
-            last_name,
+            email: newUserData.email,
+            first_name: newUserData.first_name,
+            last_name: newUserData.last_name,
         };
-        putUserById({ id, body })
-            .then((data) => {
-                const updatedUsers = users.map(user => {
-                    if (user.id === id) {
-                        return {
-                            ...user,
-                            email: data.email, 
-                            first_name: data.first_name,
-                            last_name: data.last_name,
-                        };
-                    }
-                    return user;
-                });
-                setUsers(updatedUsers);
-                closeSidebar();
+        putUserById({ id: newUserData.id, body })
+            .then((response) => {
+                dispatch(updateUser({
+                    id: newUserData.id,
+                    email: response.email,
+                    first_name: response.first_name,
+                    last_name: response.last_name,
+                }))
             })
-            .catch(error => {
-                console.error('Error:', error);
+            .finally(() => {
+                closeSidebar();
             });
     };
 
-    useEffect(() => {
-        // GET /api/users
-        getUsers()
-            .then(userData => {
-                setUsers(userData);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
-    }, []);
+useEffect(() => {
+    // GET /api/users
+    dispatch(fetchUsers());
+}, [dispatch]);
 
-    return (
-        <>
-            <UserGridContainer>
-                {users.map(user => (
-                    <UserCard key={user.id} onClick={() => openSidebar(user)}>
-                        <UserAvatar src={user.avatar} alt="User Avatar" />
-                        <UserName>{`${user.first_name} ${user.last_name}`}</UserName>
-                        <UserEmail>{user.email}</UserEmail>
-                    </UserCard>
-                ))}
-            </UserGridContainer>
-            {selectedUser && (
-               <Sidebar 
-                    isOpen={isSidebarOpen}
-                    user={selectedUser}
-                    updateUser={handleUpdateUser}
-               />
-            )}
-        </>
-    );
+return (
+    <>
+        <UserGridContainer>
+            {usersData?.map(user => (
+                <UserCard key={user.id} onClick={() => openSidebar(user)}>
+                    <UserAvatar src={user.avatar} alt="User Avatar" />
+                    <UserName>{`${user.first_name} ${user.last_name}`}</UserName>
+                    <UserEmail>{user.email}</UserEmail>
+                </UserCard>
+            ))}
+        </UserGridContainer>
+        {selectedUser && (
+            <Sidebar
+                isOpen={isSidebarOpen}
+                user={selectedUser}
+                updateUser={handleUpdateUser}
+            />
+        )}
+    </>
+);
 };
 
 export default UserGrid;

@@ -2,7 +2,7 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 import { Provider } from "react-redux";
-import store from "./store";
+import store from "./redux/store";
 import { useState } from "react";
 import Container from "./components/Container";
 import UserGrid from './components/UserGrid';
