@@ -12,15 +12,6 @@ export default function Home() {
 
     function handleClick() {
         setClick(!click)
-        fetch('https://reqres.in/api/users')
-            .then(response => response.json())
-            .then(data => {
-                const users = data.data;
-                console.log(users);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
     }
 
     return (

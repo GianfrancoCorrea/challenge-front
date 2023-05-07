@@ -1,84 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 import { UserAvatar, UserCard, UserEmail, UserGridContainer, UserName } from './UserGrid.styled';
-
-interface User {
-    id: number;
-    email: string;
-    first_name: string;
-    last_name: string;
-    avatar: string;
-}
-
-const SidebarContainer = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 300px;
-  height: 100vh;
-  background-color: #f5f5f5;
-  padding: 20px;
-  transition: transform 1s ease-in-out;
-  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(100%)')};
-`;
-
-const SidebarTitle = styled.h2`
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
-`;
-
-const EditForm = styled.form`
-  display: flex;
-  flex-direction: column;
-`;
-
-const FormGroup = styled.div`
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 20px;
-`;
-
-const FormLabel = styled.label`
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #333;
-`;
-
-const FormInput = styled.input`
-  padding: 8px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
-`;
-
-const UpdateButton = styled.button`
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-`;
+import Sidebar from './Sidebar';
+import User from '@/shared/interfaces/user.interface';
+import { getUsers, putUserById } from '@/shared/services/APIService';
 
 const UserGrid = () => {
 
     const [users, setUsers] = useState<User[]>([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const [updatedUserData, setUpdatedUserData] = useState({
-        first_name: '',
-        last_name: '',
-        email: ''
-    });
 
-    const openSidebar = user => {
+    const openSidebar = (user: User) => {
         setSelectedUser(user);
         setIsSidebarOpen(true);
-        setUpdatedUserData({
-            first_name: user.first_name,
-            last_name: user.last_name,
-            email: user.email
-        });
     };
 
     const closeSidebar = () => {
@@ -86,32 +20,23 @@ const UserGrid = () => {
         setSelectedUser(null);
     };
 
-    const handleInputChange = e => {
-        const { name, value } = e.target;
-        setUpdatedUserData(prevData => ({
-            ...prevData,
-            [name]: value
-        }));
-    };
 
-    const handleUpdateUser = (e) => {
-        e.preventDefault();
-        // Realizar solicitud PUT a /api/users/{id} para actualizar los datos del usuario
-        fetch(`https://reqres.in/api/users/${selectedUser.id}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(updatedUserData)
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Actualizar la lista de usuarios con los datos actualizados
+    const handleUpdateUser = ({ id, email, first_name, last_name}: User) => {
+        // PUT /api/users/{id}
+        const body = {
+            email,
+            first_name,
+            last_name,
+        };
+        putUserById({ id, body })
+            .then((data) => {
                 const updatedUsers = users.map(user => {
-                    if (user.id === selectedUser.id) {
+                    if (user.id === id) {
                         return {
                             ...user,
-                            ...updatedUserData
+                            email: data.email, 
+                            first_name: data.first_name,
+                            last_name: data.last_name,
                         };
                     }
                     return user;
@@ -121,22 +46,17 @@ const UserGrid = () => {
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Aquí puedes manejar el error si ocurre alguno
             });
     };
 
     useEffect(() => {
-        // Realizar solicitud GET a /api/users para obtener la lista de usuarios
-        fetch('https://reqres.in/api/users')
-            .then(response => response.json())
-            .then(data => {
-                // La respuesta contiene la lista de usuarios en la propiedad "data"
-                const usersData = data.data;
-                setUsers(usersData);
+        // GET /api/users
+        getUsers()
+            .then(userData => {
+                setUsers(userData);
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Aquí puedes manejar el error si ocurre alguno
             });
     }, []);
 
@@ -152,42 +72,11 @@ const UserGrid = () => {
                 ))}
             </UserGridContainer>
             {selectedUser && (
-                <SidebarContainer isOpen={isSidebarOpen}>
-                    <SidebarTitle>Edit User</SidebarTitle>
-                    <EditForm>
-                        <FormGroup>
-                            <FormLabel htmlFor="first_name">First Name</FormLabel>
-                            <FormInput
-                                type="text"
-                                name="first_name"
-                                id="first_name"
-                                value={updatedUserData.first_name}
-                                onChange={handleInputChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <FormLabel htmlFor="last_name">Last Name</FormLabel>
-                            <FormInput
-                                type="text"
-                                name="last_name"
-                                id="last_name"
-                                value={updatedUserData.last_name}
-                                onChange={handleInputChange}
-                            />
-                        </FormGroup>
-                        <FormGroup>
-                            <FormLabel htmlFor="email">Email</FormLabel>
-                            <FormInput
-                                type="text"
-                                name="email"
-                                id="email"
-                                value={updatedUserData.email}
-                                onChange={handleInputChange}
-                            />
-                        </FormGroup>
-                        <UpdateButton onClick={handleUpdateUser}>Update</UpdateButton>
-                    </EditForm>
-                </SidebarContainer>
+               <Sidebar 
+                    isOpen={isSidebarOpen}
+                    user={selectedUser}
+                    updateUser={handleUpdateUser}
+               />
             )}
         </>
     );
