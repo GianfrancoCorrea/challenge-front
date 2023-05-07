@@ -10,7 +10,7 @@ interface PutUserByIdParams {
 // PUT /api/users/{id}
 const putUserById = (params: PutUserByIdParams) => axios
     .put<User>(putUserByIdURL(params.id), params.body)
-    .then(response => response.data)
+    .then(response => ({ ...response.data, id: params.id }))
     .catch(error => {
         throw error;
     });
