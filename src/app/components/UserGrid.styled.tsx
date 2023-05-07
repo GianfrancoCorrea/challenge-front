@@ -12,14 +12,19 @@ const UserCard = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
-    background-color: #f5f5f5;
+    background-color: none;
     padding: 20px;
     border-radius: 8px;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.03);
+        cursor: pointer;
+    }
 `;
 
 const UserAvatar = styled.img`
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     border-radius: 50%;
     margin-bottom: 10px;
 `;
@@ -28,6 +33,7 @@ const UserName = styled.h3`
     font-size: 18px;
     margin-bottom: 5px;
     color: #333;
+    margin-bottom: 1em;
 `;
 
 const UserEmail = styled.p`

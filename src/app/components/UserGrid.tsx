@@ -16,7 +16,7 @@ const UserGrid = () => {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
-    const openSidebar = (user: User) => {
+    const openSidebar = (user: User): void => {
         setSelectedUser(user);
         setIsSidebarOpen(true);
     };

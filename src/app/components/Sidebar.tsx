@@ -15,17 +15,19 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
+	const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
-	const [userData, setUserData] = useState({
-		first_name: user.first_name,
-		last_name: user.last_name,
-		email: user.email,
+	const [userInputData, setUserInputData] = useState({
+		first_name: selectedUser?.first_name || '',
+		last_name: selectedUser?.last_name || '',
+		email: selectedUser?.email || '',
 	});
 
+	// Update the user input data when the user changes the input value
 	const handleUserDataChange = (e: InputChangeEvent) => {
 		const { name, value } = e.target;
-		setUserData({
-			...userData,
+		setUserInputData({
+			...userInputData,
 			[name]: value,
 		});
 	};
@@ -34,15 +36,26 @@ const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
         e.preventDefault();
         const userUpdated: User = {
             id: user.id,
-            email: userData.email,
-			first_name: userData.first_name,
-			last_name: userData.last_name,
+            email: userInputData.email,
+			first_name: userInputData.first_name,
+			last_name: userInputData.last_name,
             avatar: user.avatar
         };
 
         return updateUser(userUpdated);
     };
 
+	// Update the selected user when the user prop changes
+	useEffect(() => {
+		setSelectedUser(user);
+		setUserInputData({
+			first_name: user.first_name,
+			last_name: user.last_name,
+			email: user.email,
+		});
+	}, [user]);
+
+	// Close the sidebar when escape key is pressed
 	useEffect(() => {
 		const handleKeyDown = (event: KeyboardEvent): void => {
 		  if (event.key === 'Escape') {
@@ -64,7 +77,7 @@ const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
 					<FormLabel>Email</FormLabel>
 					<Input
 						type="email"
-						value={userData.email}
+						value={userInputData.email}
 						name="email"
 						onChange= {(e: InputChangeEvent) => handleUserDataChange(e)}
 					/>
@@ -73,7 +86,7 @@ const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
 					<FormLabel>First Name</FormLabel>
 					<Input
 						type="text"
-						value={userData.first_name}
+						value={userInputData.first_name}
 						name="first_name"
 						onChange={(e: InputChangeEvent) => handleUserDataChange(e)}
 					/>
@@ -82,7 +95,7 @@ const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
 					<FormLabel>Last Name</FormLabel>
 					<Input
 						type="text"
-						value={userData.last_name}
+						value={userInputData.last_name}
 						name="last_name"
 						onChange={(e: InputChangeEvent) => handleUserDataChange(e)}
 					/>
