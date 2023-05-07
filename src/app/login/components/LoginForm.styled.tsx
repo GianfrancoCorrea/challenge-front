@@ -1,40 +1,5 @@
 import styled from "styled-components";
 
-export const Input = styled.input`
-    background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    height: 40px;
-    padding: 0 15px;
-    font-size: 14px;
-    color: #444;
-    margin: 0 0 10px;
-    width: 100%;
-    box-sizing: border-box;
-    
-    &:focus {
-        border: 1px solid #999;
-        color: #333;
-    }
-`;
-
-export const Button = styled.button`
-    background: #007bff;
-    border: 0;
-    padding: 0 15px;
-    border-radius: 4px;
-    height: 40px;
-    font-size: 14px;
-    color: #fff;
-    margin: 0 0 20px;
-    width: 100%;
-    box-sizing: border-box;
-
-    &:hover {
-        background: #0069d9;
-    }
-`;
-
 export const Form = styled.form`
     width: 100%;
     width: 300px;

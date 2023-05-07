@@ -1,18 +1,20 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import User from '@/shared/interfaces/user.interface';
 import { 
 	SidebarContainer, SidebarTitle, EditForm, FormGroup,
-	FormLabel, FormInput, UpdateButton
+	FormLabel, UpdateButton
 } from './Sidebar.styled';
+import Input from "@/shared/components/Input.styled";
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 interface SidebarProps {
     isOpen: boolean;
     user: User;
     updateUser: (user: User) => void;
+	closeSidebar: () => void;
 }
 
-const Sidebar = ({ isOpen, user, updateUser }: SidebarProps) => {
+const Sidebar = ({ isOpen, user, updateUser, closeSidebar }: SidebarProps) => {
 
 	const [userData, setUserData] = useState({
 		first_name: user.first_name,
@@ -41,13 +43,26 @@ const Sidebar = ({ isOpen, user, updateUser }: SidebarProps) => {
         return updateUser(userUpdated);
     };
 
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent): void => {
+		  if (event.key === 'Escape') {
+			closeSidebar()
+		  }
+		};
+
+		document.addEventListener('keydown', handleKeyDown);
+		return () => {
+		  document.removeEventListener('keydown', handleKeyDown);
+		};
+	  }, [closeSidebar]);
+
     return (
         <SidebarContainer $isSidebarOpen={isOpen}>
 			<SidebarTitle>Edit User</SidebarTitle>
 			<EditForm onSubmit={handleSubmit}>
 				<FormGroup>
 					<FormLabel>Email</FormLabel>
-					<FormInput
+					<Input
 						type="email"
 						value={userData.email}
 						name="email"
@@ -56,7 +71,7 @@ const Sidebar = ({ isOpen, user, updateUser }: SidebarProps) => {
 				</FormGroup>
 				<FormGroup>
 					<FormLabel>First Name</FormLabel>
-					<FormInput
+					<Input
 						type="text"
 						value={userData.first_name}
 						name="first_name"
@@ -65,7 +80,7 @@ const Sidebar = ({ isOpen, user, updateUser }: SidebarProps) => {
 					</FormGroup>
 				<FormGroup>
 					<FormLabel>Last Name</FormLabel>
-					<FormInput
+					<Input
 						type="text"
 						value={userData.last_name}
 						name="last_name"

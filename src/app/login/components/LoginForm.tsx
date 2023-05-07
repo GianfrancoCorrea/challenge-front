@@ -1,7 +1,9 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { Button, Input, Form } from "./LoginForm.styled";
+import { Form } from "./LoginForm.styled";
+import Input from "@/shared/components/Input.styled";
+import Button from "@/shared/components/Button.styled";
 
 // form fields
 interface FormValues {

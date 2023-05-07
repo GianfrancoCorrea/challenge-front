@@ -68,6 +68,7 @@ return (
                 isOpen={isSidebarOpen}
                 user={selectedUser}
                 updateUser={handleUpdateUser}
+                closeSidebar={closeSidebar}
             />
         )}
     </>
