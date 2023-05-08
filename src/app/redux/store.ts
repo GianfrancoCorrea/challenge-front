@@ -2,6 +2,7 @@ import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/t
 import { useDispatch } from 'react-redux';
 import { TypedUseSelectorHook, useSelector } from 'react-redux';
 import usersReducer from './usersSlice';
+import postsReducer from "./postsSlice";
 
 // Define the type of state of your application
 export type RootState = ReturnType<typeof rootReducer>;
@@ -9,14 +10,12 @@ export type RootState = ReturnType<typeof rootReducer>;
 // Combine the reducers of all the slices
 export const rootReducer = combineReducers({
   users: usersReducer,
+  posts: postsReducer,
 });
 
 // Create your store with the initial state and necessary actions
 const store = configureStore({
-  reducer: {
-    // Here you can define your reducers
-    users: usersReducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

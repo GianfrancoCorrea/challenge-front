@@ -1,4 +1,7 @@
+import Posts from "@/shared/interfaces/post.interface";
 import { useEffect, useState } from "react";
+import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
+import { fetchPosts } from "../redux/postsSlice";
 
 type Post = {
     userId: number;
@@ -14,19 +17,21 @@ type UserPostsProps = {
 const UserPosts = ({ userId }: UserPostsProps) => {
     const [posts, setPosts] = useState<Post[]>([]); // Specify the type for `posts`
     const [loading, setLoading] = useState(true);
+    const dispatch = useAppDispatch();
+    const postsData = useAppSelector((state: RootState) => state.posts.data?.[userId] ?? null) as Posts[] | null;
 
     useEffect(() => {
-        fetch(`https://jsonplaceholder.typicode.com/posts?userId=${userId}`)
-            .then((response) => response.json())
-            .then((data) => {
-                setPosts(data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.error(error);
-                setLoading(false);
-            });
-    }, [userId]);
+        if (postsData) {
+            setPosts(postsData);
+            setLoading(false);
+        }
+    }, [postsData]);
+
+    useEffect(() => {
+        if (!postsData) {
+            dispatch(fetchPosts(userId));
+        }
+    }, [userId, dispatch, postsData]);
 
     return (
         <div>

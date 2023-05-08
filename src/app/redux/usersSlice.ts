@@ -1,5 +1,5 @@
 import User from '@/shared/interfaces/user.interface';
-import { getUsers, putUserById } from '@/shared/services/APIService';
+import { usersAPI } from '@/shared/services/APIService';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // types & initial state for the slice
@@ -18,7 +18,7 @@ const initialState: UsersState = {
 // async actions
 export const fetchUsers = createAsyncThunk(
     'users/fetchUsers',
-    () => getUsers()
+    () => usersAPI.getUsers()
 );
 
 export const updateUser = createAsyncThunk(
@@ -31,7 +31,7 @@ export const updateUser = createAsyncThunk(
             last_name,
         };
 
-        return putUserById({ id, body });
+        return usersAPI.putUserById({ id, body });
     }
 );
 
