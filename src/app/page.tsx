@@ -26,10 +26,8 @@ export default function Home() {
                       
                     </div>
 
-       
-                    <div className={styles.description}>
-                        <UserGrid />
-                    </div>
+                    <UserGrid />
+      
                 </main>
             </Container>
         </Provider>

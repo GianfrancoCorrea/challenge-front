@@ -4,10 +4,13 @@ const SidebarContainer = styled.div`
     position: fixed;
     top: 0;
     right: 0;
-    width: 300px;
+    width: 500px;
     height: 100vh;
     background-color: #f5f5f5;
     padding: 20px;
+    z-index: 10;
+    box-sizing: border-box;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
     transition: transform 1s ease-in-out;
     transform: ${({ $isSidebarOpen }) => ($isSidebarOpen ? 'translateX(0)' : 'translateX(100%)')};
 `;
@@ -18,4 +21,23 @@ const SidebarTitle = styled.h2`
     color: #333;
 `;
 
-export { SidebarContainer, SidebarTitle };
+const CloseButton = styled.button`
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background-color: transparent;
+    color: #333;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+        color: #999;
+    }
+
+    &:focus {
+        outline: none;
+    }
+`;
+
+export { SidebarContainer, SidebarTitle, CloseButton };

@@ -4,6 +4,7 @@ const UserGridContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 20px;
+    max-width: 1100px;
     width: 100%;
     margin-top: 20px;
 `;

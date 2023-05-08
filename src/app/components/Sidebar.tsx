@@ -1,5 +1,5 @@
 import { useEffect, ReactNode } from "react";
-import { SidebarContainer } from './Sidebar.styled';
+import { SidebarContainer, CloseButton } from './Sidebar.styled';
 
 interface SidebarProps {
     isOpen: boolean;
@@ -25,6 +25,7 @@ const Sidebar = ({ isOpen, closeSidebar, children }: SidebarProps) => {
 
     return (
         <SidebarContainer $isSidebarOpen={isOpen}>
+			<CloseButton onClick={closeSidebar}>&times;</CloseButton>
 			{children}
         </SidebarContainer>
     );

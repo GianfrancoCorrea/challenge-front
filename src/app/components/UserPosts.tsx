@@ -2,6 +2,7 @@ import Posts from "@/shared/interfaces/post.interface";
 import { useEffect, useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { fetchPosts } from "../redux/postsSlice";
+import { PostBody, PostStyled, PostTitle } from "./UserPosts.styled";
 
 type Post = {
     userId: number;
@@ -15,7 +16,7 @@ type UserPostsProps = {
 };
 
 const UserPosts = ({ userId }: UserPostsProps) => {
-    const [posts, setPosts] = useState<Post[]>([]); // Specify the type for `posts`
+    const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
     const dispatch = useAppDispatch();
     const postsData = useAppSelector((state: RootState) => state.posts.data?.[userId] ?? null) as Posts[] | null;
@@ -37,10 +38,10 @@ const UserPosts = ({ userId }: UserPostsProps) => {
         <div>
             {loading && <p>Loading...</p>}
             {posts.map((post) => (
-                <div key={post.id}>
-                    <h3>{post.title}</h3>
-                    <p>{post.body}</p>
-                </div>
+                <PostStyled key={post.id}>
+                    <PostTitle>{post.title}</PostTitle>
+                    <PostBody>{post.body}</PostBody>    
+                </PostStyled>
             ))}
         </div>
     );
