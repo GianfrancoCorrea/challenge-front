@@ -7,7 +7,7 @@ export const Form = styled.form`
     padding: 30px 20px;
     background: #fafafa;
     font-size: 14px;
-    border-radius: 4px;
+    border-radius: 3px;
     box-sizing: border-box;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     color: #333;

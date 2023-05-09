@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
-import { UserAvatar, UserCard, UserEmail, UserGridContainer, UserName } from './UserGrid.styled';
 import Sidebar from './Sidebar';
 import User from '@/shared/interfaces/user.interface';
 import { RootState, useAppDispatch, useAppSelector } from '../redux/store';
 import { fetchUsers, updateUser } from '../redux/usersSlice';
 import UserEditForm from './UserEditForm';
-import { SidebarTitle } from './Sidebar.styled';
 import UserPosts from './UserPosts';
+import Image from 'next/image';
+import PencilIcon from '@/shared/assets/pencil.svg';
+import {
+    DivFlex, PencilIconWrapper, UserAvatar, UserCard,
+    UserDetailsContainer, UserEmail, UserGridContainer,
+    UserName
+} from './UserGrid.styled';
 
 const UserGrid = () => {
 
@@ -17,6 +22,7 @@ const UserGrid = () => {
 
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         dispatch(fetchUsers());
@@ -30,6 +36,7 @@ const UserGrid = () => {
     const closeSidebar = () => {
         setIsSidebarOpen(false);
         setSelectedUser(null);
+        setIsEditing(false);
     };
 
     const handleUpdateUser = (newUserData: User) => {
@@ -48,17 +55,32 @@ const UserGrid = () => {
                     </UserCard>
                 ))}
             </UserGridContainer>
-            {selectedUser && (
-                <Sidebar
-                    isOpen={isSidebarOpen}
-                    closeSidebar={closeSidebar}
-                >
-                    <SidebarTitle>Edit User</SidebarTitle>
-                    <UserEditForm user={selectedUser} updateUser={handleUpdateUser} />
-                    <br />
-                    <UserPosts userId={selectedUser.id} />
-                </Sidebar>
-            )}
+            <Sidebar
+                isOpen={isSidebarOpen}
+                closeSidebar={closeSidebar}
+            >
+                {selectedUser?.id && (
+                    <>
+                        <DivFlex>
+                            <UserAvatar src={selectedUser.avatar} alt="User Avatar" />
+                            {!isEditing ? (
+                                <UserDetailsContainer onClick={() => setIsEditing(true)}>
+                                    <UserName>{`${selectedUser.first_name} ${selectedUser.last_name}`}</UserName>
+                                    <UserEmail>{selectedUser.email}</UserEmail>
+                                    <PencilIconWrapper>
+                                        <Image src={PencilIcon} alt="Edit Icon" />
+                                    </PencilIconWrapper>
+                                </UserDetailsContainer>
+                            ) : (
+                                <UserEditForm user={selectedUser} updateUser={handleUpdateUser} onClose={() => setIsEditing(false)} />
+                            )}
+                        </DivFlex>
+                        <br />
+                        <UserPosts userId={selectedUser.id} />
+                    </>
+                )}
+            </Sidebar>
+
         </>
     );
 };

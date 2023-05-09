@@ -1,5 +1,4 @@
 'use client';
-import Image from 'next/image'
 import styles from './page.module.css'
 import { Provider } from "react-redux";
 import store from "./redux/store";
@@ -16,7 +15,7 @@ export default function Home() {
 
     return (
         <Provider store={store}>
-            <Container background={click ? '#fefefe' : 'steelblue'}>
+            <Container background={click ? 'steelblue' : '#fafafa'}>
                 <main className={styles.main}>
                     <div className={styles.description}>
                         <button onClick={handleClick}>styles test</button>

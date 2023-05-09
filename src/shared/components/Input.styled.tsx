@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 const Input = styled.input`
     background: #fff;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    border: none;
+    border-radius: 3px;
     height: 40px;
     padding: 0 15px;
     font-size: 14px;
@@ -13,7 +13,7 @@ const Input = styled.input`
     box-sizing: border-box;
     
     &:focus {
-        border: 1px solid #999;
+        border: none;
         color: #333;
     }
 `;
