@@ -49,9 +49,10 @@ const UserGrid = () => {
     return (
         <>
             <UserGridContainer>
-                {usersData?.map(user => (
+                {usersData?.map((user, index) => (
                     <UserCard 
                         as={motion.div}
+                        transition={{ delay: 0.1 * index,  ease: "easeOut", duration: 0.2 }}
                         initial={{ y: "-100px", opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         key={`userId-${user.id}`}
