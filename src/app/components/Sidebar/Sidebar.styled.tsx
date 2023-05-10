@@ -6,13 +6,13 @@ export const SidebarContainer = styled.div`
     right: 0;
     width: 500px;
     height: 100vh;
-    background-color: #f5f5f5;
     padding: 20px;
     z-index: 10;
+    background-color: #fafafa;
     box-sizing: border-box;
     overflow: auto;
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
-    transition: transform 0.15s ease-in-out;
+    border-left: 1px solid #ccc;
+    transition: transform 0.2s ease-in-out;
     transform: ${({ $isSidebarOpen }) => ($isSidebarOpen ? 'translateX(0)' : 'translateX(100%)')};
 `;
 

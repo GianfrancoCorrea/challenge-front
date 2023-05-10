@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
-import Sidebar from './Sidebar';
+import Sidebar from '../Sidebar';
 import User from '@/shared/interfaces/user.interface';
-import { RootState, useAppDispatch, useAppSelector } from '../redux/store';
-import { fetchUsers, updateUser } from '../redux/usersSlice';
-import UserEditForm from './UserEditForm';
-import UserPosts from './UserPosts';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/store';
+import { fetchUsers, updateUser } from '../../redux/usersSlice';
+import UserEditForm from '../UserEditForm';
+import UserPosts from '../UserPosts';
 import Image from 'next/image';
 import PencilIcon from '@/shared/assets/pencil.svg';
 import {
@@ -13,7 +13,6 @@ import {
     UserName
 } from './UserGrid.styled';
 import { motion } from 'framer-motion';
-import { set } from 'react-hook-form';
 
 const UserGrid = () => {
 
@@ -61,6 +60,7 @@ const UserGrid = () => {
                         animate={{ y: 0, opacity: 1 }}
                         key={`userId-${user.id}`}
                         onClick={() => openSidebar(user)}
+                        $isSelected={selectedUser?.id === user.id}
                     >
                         <UserAvatar src={user.avatar} alt="User Avatar" />
                         <UserName>{`${user.first_name} ${user.last_name}`}</UserName>

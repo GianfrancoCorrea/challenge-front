@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "@/shared/interfaces/post.interface";
-import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
-import { fetchPosts } from "../redux/postsSlice";
+import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
+import { fetchPosts } from "../../redux/postsSlice";
 import {  PostWrapper, PostDivider } from "./UserPosts.styled";
 import { Reorder, AnimatePresence } from 'framer-motion';
 import PostContainer from "./PostContainer";
@@ -42,6 +42,7 @@ const UserPosts = ({ userId }: UserPostsProps) => {
             {posts.map((post, index) => (
                 <Reorder.Group
                     axis="y"
+                    animate="animate"
                     onReorder={setPosts}
                     values={posts}
                     key={`postId-${post.id}`}

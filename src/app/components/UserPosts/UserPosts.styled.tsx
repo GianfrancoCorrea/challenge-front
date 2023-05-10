@@ -6,6 +6,12 @@ export const PostWrapper = styled.div`
     align-items: center;
     box-sizing: border-box;
     padding: 10px 20px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
     
 `;
 
@@ -13,7 +19,7 @@ export const PostStyled = styled.div`
     position: relative;
     padding: 10px 50px;
     margin-bottom: 10px;
-    transition: background-color 0.3s;
+    background-color: #fafafa;
 
 `;
 export const PostTitle = styled.h3`

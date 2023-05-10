@@ -16,11 +16,18 @@ export const UserCard = styled.div`
     background-color: none;
     padding: 20px;
     border-radius: 3px;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.3s;
 
     &:hover {
         background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: 2px solid #ccc;
         cursor: pointer;
     }
+    ${({ $isSelected }) => $isSelected && `
+        background-color: rgba(0, 0, 0, 0.03);
+        border-bottom: 2px solid #ccc;
+    `}
 `;
 
 export const UserAvatar = styled.img`

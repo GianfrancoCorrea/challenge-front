@@ -17,6 +17,9 @@ const PostContainer = ({ post, onDelete, index }: PostProps) => {
             transition={{ delay: 0.1 * index, ease: "easeOut" }}
             initial={{ y: 30, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
+            dragConstraints={{ top: 0, bottom: 0, left: 0, right: 0 }}
+            dragElastic={0.1}
+            dragDirectionLock={true}
             value={post}
             id={post.id.toString()}
         >
