@@ -83,7 +83,6 @@ export const PencilIconWrapper = styled.div`
     position: absolute;
     top: 30%;
     right: -30px;
-    transform: translateY(-50%);
     margin-left: 10px;
     opacity: 0.1;
     transition: opacity 0.3s;
