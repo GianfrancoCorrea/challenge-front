@@ -24,7 +24,7 @@ const Sidebar = ({ isOpen, closeSidebar, children }: SidebarProps) => {
 	  }, [closeSidebar]);
 
     return (
-        <SidebarContainer $isSidebarOpen={isOpen}>
+        <SidebarContainer $isSidebarOpen={isOpen} className="sidebar" >
 			<CloseButton onClick={closeSidebar}>&times;</CloseButton>
 			{children}
         </SidebarContainer>
