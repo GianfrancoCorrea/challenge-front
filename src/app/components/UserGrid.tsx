@@ -43,7 +43,7 @@ const UserGrid = () => {
 
     const handleUpdateUser = (newUserData: User) => {
         dispatch(updateUser(newUserData))
-            .finally(() => closeSidebar());
+            .finally(() => setIsEditing(false));
     };
 
     return (

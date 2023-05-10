@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import Post from "@/shared/interfaces/post.interface";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { fetchPosts } from "../redux/postsSlice";
-import { PostBody, PostContainer, PostDivider, PostStyled, PostTitle, TrashIconWrapper } from "./UserPosts.styled";
-import { motion } from 'framer-motion';
-import Image from "next/image";
-import TrashIcon from '@/shared/assets/trash.svg';
+import {  PostWrapper, PostDivider } from "./UserPosts.styled";
+import { Reorder, AnimatePresence } from 'framer-motion';
+import PostContainer from "./PostContainer";
 
 type UserPostsProps = {
     userId: number;
@@ -34,31 +33,30 @@ const UserPosts = ({ userId }: UserPostsProps) => {
         setPosts(posts.filter((post) => post.id !== postId));
         // TODO: delete slice | avoid animation run every render (usePrevious, useAnimate)
         // dispatch(deletePost(postId));
-
     };
 
     return (
-        <PostContainer>
+        <PostWrapper>
             {loading && <p>Loading...</p>}
             <PostDivider />
             {posts.map((post, index) => (
-                <>
-                    <PostStyled key={post.id}
-                        as={motion.div}
-                        transition={{ delay: 0.1 * index, ease: "easeOut" }}
-                        initial={{ y: "-50px", opacity: 0 }}
-                        animate={{ y: 0, opacity: 1 }}
-                    >
-                        <PostTitle>{post.title}</PostTitle>
-                        <PostBody>{post.body}</PostBody>
-                        <TrashIconWrapper onClick={() => handleDeletePost(post.id)}>
-                            <Image src={TrashIcon} alt="Edit Icon" />
-                        </TrashIconWrapper>
-                    </PostStyled>
-                    <PostDivider />
-                </>
+                <Reorder.Group
+                    axis="y"
+                    onReorder={setPosts}
+                    values={posts}
+                    key={`postId-${post.id}`}
+                >
+                    <AnimatePresence initial={true}>
+                        <PostContainer
+                            post={post}
+                            key={`postId-${post.id}`}
+                            index={index}
+                            onDelete={handleDeletePost}
+                        />
+                    </AnimatePresence>
+                </Reorder.Group>
             ))}
-        </PostContainer>
+        </PostWrapper>
     );
 };
 
