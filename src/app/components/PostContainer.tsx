@@ -29,7 +29,6 @@ const PostContainer = ({ post, onDelete, index }: PostProps) => {
             </PostStyled>
             <PostDivider />
         </Reorder.Item>
-
     );
 };
 

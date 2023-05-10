@@ -13,6 +13,7 @@ import {
     UserName
 } from './UserGrid.styled';
 import { motion } from 'framer-motion';
+import { set } from 'react-hook-form';
 
 const UserGrid = () => {
 
@@ -43,7 +44,10 @@ const UserGrid = () => {
 
     const handleUpdateUser = (newUserData: User) => {
         dispatch(updateUser(newUserData))
-            .finally(() => setIsEditing(false));
+            .finally(() => {
+                setIsEditing(false);
+                setSelectedUser(newUserData);
+            });
     };
 
     return (
