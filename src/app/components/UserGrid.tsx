@@ -12,6 +12,7 @@ import {
     UserDetailsContainer, UserEmail, UserGridContainer,
     UserName
 } from './UserGrid.styled';
+import { motion } from 'framer-motion';
 
 const UserGrid = () => {
 
@@ -25,6 +26,7 @@ const UserGrid = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
+        // TODO: serverside fetch
         dispatch(fetchUsers());
     }, [dispatch]);
 
@@ -48,7 +50,13 @@ const UserGrid = () => {
         <>
             <UserGridContainer>
                 {usersData?.map(user => (
-                    <UserCard key={user.id} onClick={() => openSidebar(user)}>
+                    <UserCard 
+                        as={motion.div}
+                        initial={{ y: "-100px", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        key={`userId-${user.id}`}
+                        onClick={() => openSidebar(user)}
+                    >
                         <UserAvatar src={user.avatar} alt="User Avatar" />
                         <UserName>{`${user.first_name} ${user.last_name}`}</UserName>
                         <UserEmail>{user.email}</UserEmail>
@@ -80,7 +88,6 @@ const UserGrid = () => {
                     </>
                 )}
             </Sidebar>
-
         </>
     );
 };

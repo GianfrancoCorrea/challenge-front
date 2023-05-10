@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../redux/store";
 import { fetchPosts } from "../redux/postsSlice";
 import { PostBody, PostContainer, PostDivider, PostStyled, PostTitle } from "./UserPosts.styled";
+import { motion } from 'framer-motion';
 
 type UserPostsProps = {
     userId: number;
@@ -33,7 +34,11 @@ const UserPosts = ({ userId }: UserPostsProps) => {
             <PostDivider />
             {posts.map((post) => (
                 <>
-                    <PostStyled key={post.id}>
+                    <PostStyled key={post.id} 
+                        as={motion.div}
+                        initial={{ y: "-50px", opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                    >
                         <PostTitle>{post.title}</PostTitle>
                         <PostBody>{post.body}</PostBody>
                     </PostStyled>
