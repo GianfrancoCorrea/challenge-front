@@ -85,7 +85,7 @@ export default function LoginForm() {
 
             <ForgotPassword>Forgot your password?</ForgotPassword>
 
-            {isLoading && <Loading />}
+            <Loading />
         </Form>
     );
 }
