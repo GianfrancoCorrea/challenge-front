@@ -31,9 +31,16 @@ const getPostsByUserId = (id: number) => axios
         throw error;
     });
 
-const updatePostById = (id: number, body: Partial<Post>) => axios
-    .put<Post>(posts.updatePostByIdURL(id), body)
-    .then(response => ({ ...response.data, id }))
+const deletePostById = (post: Post) => axios
+    .delete<Post>(posts.deletePostByIdURL(post.id, post.userId))
+    .then(response => ({ ...response.data, post }))
+    .catch(error => {
+        throw error;
+    });
+
+const userLogin = (body: { email: string; password: string }) => axios
+    .post<{ token: string }>(users.loginURL(), body)
+    .then(response => response.data)
     .catch(error => {
         throw error;
     });
@@ -42,11 +49,12 @@ const updatePostById = (id: number, body: Partial<Post>) => axios
 const usersAPI = {
     putUserById,
     getUsers,
+    userLogin,
 };
 
 const postsAPI = {
     getPostsByUserId,
-    updatePostById,
+    deletePostById,
 };
 
 

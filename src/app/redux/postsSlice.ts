@@ -19,17 +19,9 @@ export const fetchPosts = createAsyncThunk(
     (id: number) => postsAPI.getPostsByUserId(id)
 );
 
-export const updatePost = createAsyncThunk(
-    "posts/updatePost",
-    (updatedPostData: Post) => {
-        const { id, title, body } = updatedPostData;
-        const updatedData = {
-            title,
-            body,
-        };
-
-        return postsAPI.updatePostById(id, updatedData);
-    }
+export const deletePost = createAsyncThunk(
+    "posts/deletePost",
+    (post: Post) => postsAPI.deletePostById(post)
 );
 
 const postsSlice = createSlice({
@@ -55,20 +47,24 @@ const postsSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message || null;
             })
-            .addCase(updatePost.fulfilled, (state, action) => {
-                /*  
-                TODO: update post logic
-                const { id } = action.payload;
-                 const postIndex = state.data?.findIndex((post) => post.id === id);
-         
-                 if (postIndex !== undefined && postIndex !== -1 && state.data) {
-                   state.data[postIndex] = {
-                     ...state.data[postIndex],
-                     ...action.payload,
-                   };
-                 } */
+            .addCase(deletePost.pending, (state) => {
+                state.loading = true;
+                state.error = null;
             })
-            .addCase(updatePost.rejected, (state, action) => {
+            .addCase(deletePost.fulfilled, (state, action) => {
+                state.loading = false;
+                const { post } = action.payload;
+                const { userId, id } = post;
+                // Update the data property using the user ID as the key
+                state.data = {
+                    ...state.data,
+                    [userId]: state.data![userId].filter(
+                        (post) => post.id !== id
+                    ),
+                };
+
+            })
+            .addCase(deletePost.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message || null;
             });
