@@ -69,6 +69,10 @@ States handled with Redux-Toolkit:
 - [x] Posts
 - [ ] Albums
 
+Requests handled with Axios:
+- [x] [reqres](https://reqres.in/) (login | users)
+- [x] [jsonplaceholder](https://jsonplaceholder.typicode.com/) (posts)
+
 ## Screenshots
 
 ![Login](/screenshots/Login.png "Login")
