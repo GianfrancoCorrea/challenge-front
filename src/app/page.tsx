@@ -1,32 +1,39 @@
-'use client';
+"use client";
 import styles from './page.module.css'
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import { useState } from "react";
 import Container from "./components/Container";
 import UserGrid from './components/UserGrid';
+import useLogin from '@/shared/hooks/useLogin';
 
 export default function Home() {
-    const [click, setClick] = useState(false);
-
-    function handleClick() {
-        setClick(!click)
-    }
+    const { login, user, logout } = useLogin();
 
     return (
         <Provider store={store}>
-            <Container background={click ? 'steelblue' : '#fafafa'}>
+            <Container background={'#fafafa'}>
                 <main className={styles.main}>
                     <div className={styles.description}>
-                        <button onClick={handleClick}>styles test</button>
-                        <p>
-                            <a href="/login">{'Login'}</a>
-                        </p>
-                      
+                        {
+                            login ? (
+                                <>
+                                    <p>
+                                        <a href="#" onClick={() => logout()}>{'Logout'}</a>
+                                    </p>
+                                    <p>
+                                        logged in as <strong>{user}</strong>
+                                    </p>
+                                </>
+                            ) : (
+                                <p>
+                                    <a href="/login">{'Login'}</a>
+                                </p>
+                            )
+                        }
                     </div>
 
                     <UserGrid />
-      
+
                 </main>
             </Container>
         </Provider>

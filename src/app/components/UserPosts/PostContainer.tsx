@@ -3,14 +3,16 @@ import { PostBody, PostDivider, PostStyled, PostTitle, TrashIconWrapper } from "
 import { Reorder } from 'framer-motion';
 import Image from "next/image";
 import TrashIcon from '@/shared/assets/trash.svg';
+import Loading from "@/shared/components/Loading";
 
 type PostProps = {
     post: Post;
     index: number;
+    loading: boolean;
     onDelete: (postId: number) => void;
 };
 
-const PostContainer = ({ post, onDelete, index }: PostProps) => {
+const PostContainer = ({ post, onDelete, index, loading }: PostProps) => {
 
     return (
         <Reorder.Item
@@ -29,6 +31,7 @@ const PostContainer = ({ post, onDelete, index }: PostProps) => {
                 <TrashIconWrapper onClick={() => onDelete(post.id)}>
                     <Image src={TrashIcon} alt="Edit Icon" />
                 </TrashIconWrapper>
+                {loading && <Loading />}
             </PostStyled>
             <PostDivider />
         </Reorder.Item>

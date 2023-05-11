@@ -16,6 +16,18 @@ const Input = styled.input`
         border: none;
         color: #333;
     }
+
+    &:focus-visible {
+        outline: none;
+    }
+
+    &::placeholder {
+        color: #999;
+    }
+
+
+    border-bottom: ${({ $error }) => ($error ? ' 3px solid #ff33337c !important' : '')};
+
 `;
 
 export default Input;
