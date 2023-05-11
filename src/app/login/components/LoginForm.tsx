@@ -7,6 +7,7 @@ import Input from "@/shared/components/Input.styled";
 import Button from "@/shared/components/Button.styled";
 import Loading from "@/shared/components/Loading";
 import useLogin from "@/shared/hooks/useLogin";
+import { usersAPI } from "@/shared/services/APIService";
 
 // form fields
 interface FormValues {
@@ -33,38 +34,29 @@ export default function LoginForm() {
 
     const { setToken, setUser } = useLogin();
 
-    const onSubmit = (data: FormValues) => {
+    const onSubmit = ({ username, password }: FormValues) => {
         if(errors.username || errors.password) return;
         setIsLoading(true);
 
-        // login to reqres.in
-        fetch("https://reqres.in/api/login", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        })
-            .then((response) => {
+        usersAPI.userLogin({ email: username, password })
+            .then((response: any) => {
                 if (!response.ok) {
                     setError('root', { type: 'manual', message: 'Invalid credentials' });
                 }
                 return response.json();
             })
-            .then((response) => {
-
+            .then((response: any) => {
                 // save token to local storage
                 setToken(response.token);
-                setUser(data.username);
+                setUser(username);
                 setIsLoading(false);
                 // go to home page
                 window.location.href = "/";
             })
-            .catch((error) => {
+            .catch((error: any) => {
                 console.error("Error:", error);
                 setIsLoading(false);
             });
-        console.log(data);
     };
 
     return (

@@ -4,16 +4,18 @@ import { reqresAPI, jsonplaceholderAPI } from "../constants";
 const putUserByIdURL = (id: number) => (`${reqresAPI}/users/${id}`);
 const getUsersURL = () => (`${reqresAPI}/users`);
 const getPostsByUserIdURL = (id: number) => (`${jsonplaceholderAPI}/posts?userId=${id}`);
-const updatePostByIdURL = (id: number) => (`${jsonplaceholderAPI}/posts/${id}`);
+const deletePostByIdURL = (postId: number, userId: number) => (`${jsonplaceholderAPI}/posts/${postId}?userId=${userId}`);
+const loginURL = () => (`${reqresAPI}/login`);
 
 const users = {
     putUserByIdURL,
-    getUsersURL
+    getUsersURL,
+    loginURL
 };
 
 const posts = {
     getPostsByUserIdURL,
-    updatePostByIdURL
+    deletePostByIdURL
 };
 
 export { 

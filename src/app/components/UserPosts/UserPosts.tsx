@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Post from "@/shared/interfaces/post.interface";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/store";
-import { fetchPosts } from "../../redux/postsSlice";
+import { deletePost, fetchPosts } from "../../redux/postsSlice";
 import {  PostWrapper, PostDivider } from "./UserPosts.styled";
 import { Reorder, AnimatePresence } from 'framer-motion';
 import PostContainer from "./PostContainer";
@@ -32,9 +32,9 @@ const UserPosts = ({ userId }: UserPostsProps) => {
 
     const handleDeletePost = (postId: number) => {
         setIsDeletingPost(postId);
-        setPosts(posts.filter((post) => post.id !== postId));
-        // TODO: delete slice | avoid animation run every render (usePrevious, useAnimate)
-        // dispatch(deletePost(postId));
+        const post = posts.find((post) => post.id === postId) as Post;
+        dispatch(deletePost(post))
+            .then(() => setIsDeletingPost(0));
     };
 
     return (
