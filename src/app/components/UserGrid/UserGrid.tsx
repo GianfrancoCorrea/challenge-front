@@ -13,6 +13,7 @@ import {
     UserName
 } from './UserGrid.styled';
 import { motion } from 'framer-motion';
+import Loading from '@/shared/components/Loading';
 
 const UserGrid = () => {
 
@@ -53,9 +54,9 @@ const UserGrid = () => {
         <>
             <UserGridContainer>
                 {usersData?.map((user, index) => (
-                    <UserCard 
+                    <UserCard
                         as={motion.div}
-                        transition={{ delay: 0.1 * index,  ease: "easeOut", duration: 0.2 }}
+                        transition={{ delay: 0.1 * index, ease: "easeOut", duration: 0.2 }}
                         initial={{ y: "-100px", opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         key={`userId-${user.id}`}
@@ -67,6 +68,7 @@ const UserGrid = () => {
                         <UserEmail>{user.email}</UserEmail>
                     </UserCard>
                 ))}
+                {(!usersData || loading) && <Loading />}
             </UserGridContainer>
             <Sidebar
                 isOpen={isSidebarOpen}

@@ -13,6 +13,7 @@ type UserPostsProps = {
 const UserPosts = ({ userId }: UserPostsProps) => {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const [isDeletingPost, setIsDeletingPost] = useState<number>(0);
     const dispatch = useAppDispatch();
     const postsData = useAppSelector((state: RootState) => state.posts.data?.[userId] ?? null) as Post[] | null;
 
@@ -30,6 +31,7 @@ const UserPosts = ({ userId }: UserPostsProps) => {
     }, [userId, dispatch, postsData]);
 
     const handleDeletePost = (postId: number) => {
+        setIsDeletingPost(postId);
         setPosts(posts.filter((post) => post.id !== postId));
         // TODO: delete slice | avoid animation run every render (usePrevious, useAnimate)
         // dispatch(deletePost(postId));
@@ -53,6 +55,7 @@ const UserPosts = ({ userId }: UserPostsProps) => {
                             key={`postId-${post.id}`}
                             index={index}
                             onDelete={handleDeletePost}
+                            loading={isDeletingPost === post.id}
                         />
                     </AnimatePresence>
                 </Reorder.Group>

@@ -4,6 +4,7 @@ import {
     ButtonsContainer, CancelButton, DivRow, EditForm,
     FormGroup, FormInput, UpdateButton
 } from './UserEditForm.styled';
+import Loading from "@/shared/components/Loading";
 
 type InputChangeEvent = ChangeEvent<HTMLInputElement>;
 interface UserEditProps {
@@ -22,7 +23,7 @@ const defaultInputData = (user: User | null) => {
 
 const UserEditForm = ({ user, updateUser, onClose }: UserEditProps) => {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
-
+    const [isLoading, setIsLoading] = useState(false);
     const [userInputData, setUserInputData] = useState(defaultInputData(selectedUser));
 
 
@@ -33,6 +34,7 @@ const UserEditForm = ({ user, updateUser, onClose }: UserEditProps) => {
             ...userInputData,
             [name]: value,
         });
+        setIsLoading(false);
     };
 
     const handleSubmit = (e: FormEvent) => {
@@ -44,7 +46,7 @@ const UserEditForm = ({ user, updateUser, onClose }: UserEditProps) => {
             last_name: userInputData.last_name,
             avatar: user.avatar
         };
-
+        setIsLoading(true);
         return updateUser(userUpdated);
     };
 
@@ -95,6 +97,7 @@ const UserEditForm = ({ user, updateUser, onClose }: UserEditProps) => {
                 <UpdateButton type="submit">Update</UpdateButton>
                 <CancelButton type="button" onClick={() => handleClosing()}>Cancel</CancelButton>
             </ButtonsContainer>
+            {isLoading && <Loading />}
         </EditForm>
     );
 };

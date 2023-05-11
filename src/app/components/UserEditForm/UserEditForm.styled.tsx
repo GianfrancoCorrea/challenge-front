@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Input from "@/shared/components/Input.styled";
 
 export const EditForm = styled.form`
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 10px 20px;

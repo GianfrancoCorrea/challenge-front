@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ErrorMessage, ForgotPassword, Form } from "./LoginForm.styled";
 import Input from "@/shared/components/Input.styled";
 import Button from "@/shared/components/Button.styled";
+import Loading from "@/shared/components/Loading";
 
 // form fields
 interface FormValues {
@@ -20,7 +22,7 @@ const schema = yup.object().shape({
 const resolver = yupResolver(schema);
 
 export default function LoginForm() {
-    
+    const [isLoading, setIsLoading] = useState(false);
     const {
         register,
         handleSubmit,
@@ -28,6 +30,8 @@ export default function LoginForm() {
     } = useForm<FormValues>({ resolver });
 
     const onSubmit = (data: FormValues) => {
+        if(errors.username || errors.password) return;
+        setIsLoading(true);
         console.log(data);
     };
 
@@ -54,7 +58,7 @@ export default function LoginForm() {
 
             <ForgotPassword>Forgot your password?</ForgotPassword>
 
-
+            {isLoading && <Loading />}
         </Form>
     );
 }
