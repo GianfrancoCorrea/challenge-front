@@ -54,7 +54,9 @@ export default function LoginForm() {
                 window.location.href = "/";
             })
             .catch((error: any) => {
-                console.error("Error:", error);
+                if(error.response.status === 400) {
+                    setError('root', { type: 'manual', message: 'Invalid credentials' });
+                }
                 setIsLoading(false);
             });
     };
