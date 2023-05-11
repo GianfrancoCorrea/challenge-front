@@ -1,27 +1,19 @@
-## Getting Started
+## Start the project
 Install dependencies:
 
 ```bash
 npm install
-# or
-yarn
-# or
-pnpm install
 ```
 
 Run the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Technologies
+## Technologies Used
 
 - [Next.js](https://nextjs.org/) (React framework)
 - [TypeScript](https://www.typescriptlang.org/) (static typing)
@@ -33,7 +25,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [Yup](https://www.npmjs.com/package/yup/) (form validation)
 - [Frame Motion](https://www.framer.com/motion/) (animations)
 
-## Project Structure
+## Project Structure (src)
 
 ```
 .(src) 
@@ -60,7 +52,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ```
 
-## Features
+## Features Implemented
 
 - [x] Login (local storage | yup validation | form handling)
 - [x] Logout
@@ -69,16 +61,16 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - [x] User details edit
 - [x] User posts (animations)
 - [x] User posts delete (re-order animation)
-- [] User albums
+- [ ] User albums
 
 States handled with Redux-Toolkit:
 
 - [x] Users
 - [x] Posts
-- [] Albums
+- [ ] Albums
 
 ## Screenshots
 
-![Login](/screenshots/Login.png?raw=true "Login")
+![Login](/screenshots/Login.png "Login")
 ![User List](/screenshots/UserList.png?raw=true "User List")
 ![User Details](/screenshots/UserDetails.png?raw=true "User Details")
