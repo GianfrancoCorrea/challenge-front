@@ -72,5 +72,5 @@ States handled with Redux-Toolkit:
 ## Screenshots
 
 ![Login](/screenshots/Login.png "Login")
-![User List](/screenshots/UserList.png?raw=true "User List")
-![User Details](/screenshots/UserDetails.png?raw=true "User Details")
+![User List](/screenshots/UserList.png "User List")
+![User Details](/screenshots/UserDetails.png "User Details")
