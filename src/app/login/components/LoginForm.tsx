@@ -6,6 +6,7 @@ import { ErrorMessage, ForgotPassword, Form } from "./LoginForm.styled";
 import Input from "@/shared/components/Input.styled";
 import Button from "@/shared/components/Button.styled";
 import Loading from "@/shared/components/Loading";
+import useLogin from "@/shared/hooks/useLogin";
 
 // form fields
 interface FormValues {
@@ -26,12 +27,43 @@ export default function LoginForm() {
     const {
         register,
         handleSubmit,
+        setError,
         formState: { errors },
     } = useForm<FormValues>({ resolver });
+
+    const { setToken, setUser } = useLogin();
 
     const onSubmit = (data: FormValues) => {
         if(errors.username || errors.password) return;
         setIsLoading(true);
+
+        // login to reqres.in
+        fetch("https://reqres.in/api/login", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    setError('root', { type: 'manual', message: 'Invalid credentials' });
+                }
+                return response.json();
+            })
+            .then((response) => {
+
+                // save token to local storage
+                setToken(response.token);
+                setUser(data.username);
+                setIsLoading(false);
+                // go to home page
+                window.location.href = "/";
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                setIsLoading(false);
+            });
         console.log(data);
     };
 
@@ -53,6 +85,7 @@ export default function LoginForm() {
                 autoComplete="new-password"
                 $error={errors.password}
             />
+                {errors.root && <ErrorMessage>{errors.root.message}</ErrorMessage>}
 
             <Button type="submit">Submit</Button>
 
