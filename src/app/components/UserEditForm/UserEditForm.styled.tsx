@@ -24,7 +24,6 @@ export const FormLabel = styled.label`
 export const FormInput = styled(Input)`
     border-bottom: 1px solid #ddd;
     border-radius: 0;
-
     font-size: 16px;
     margin-bottom: 5px;
     color: #333;
@@ -33,8 +32,6 @@ export const FormInput = styled(Input)`
         border-bottom: 2px solid #ddd;
         outline: none;
     }
-
-
 `;
 
 export const UpdateButton = styled.button`
@@ -56,12 +53,10 @@ export const CancelButton = styled.button`
 `;
 
 export const ButtonsContainer = styled.div`
-    /* grid with 70/30 for 2 buttons */
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-gap: 10px;
 `;
-
 
 export const DivRow = styled.div`
     display: flex;

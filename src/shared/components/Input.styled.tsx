@@ -25,7 +25,6 @@ const Input = styled.input`
         color: #999;
     }
 
-
     border-bottom: ${({ $error }) => ($error ? ' 3px solid #ff33337c !important' : '')};
 
 `;

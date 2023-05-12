@@ -27,7 +27,6 @@ const UserGrid = () => {
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
-        // TODO: serverside fetch
         dispatch(fetchUsers());
     }, [dispatch]);
 
