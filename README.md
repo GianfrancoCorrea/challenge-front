@@ -15,7 +15,7 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Production deployment
 
-[challenge-front-nine.vercel.app](challenge-front-nine.vercel.app)
+[challenge-front-nine.vercel.app](https://challenge-front-nine.vercel.app/)
 
 ## Technologies Used
 
