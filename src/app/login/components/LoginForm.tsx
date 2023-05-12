@@ -8,6 +8,7 @@ import Button from "@/shared/components/Button.styled";
 import Loading from "@/shared/components/Loading";
 import useLogin from "@/shared/hooks/useLogin";
 import { usersAPI } from "@/shared/services/APIService";
+import Tooltip from "@/shared/components/Tooltip.styled";
 
 // form fields
 interface FormValues {
@@ -40,12 +41,9 @@ export default function LoginForm() {
 
         usersAPI.userLogin({ email: username, password })
             .then((response: any) => {
-                if (!response.ok) {
-                    setError('root', { type: 'manual', message: 'Invalid credentials' });
+                if (!response.token) {
+                    return setError('root', { type: 'manual', message: 'Invalid credentials' });
                 }
-                return response.json();
-            })
-            .then((response: any) => {
                 // save token to local storage
                 setToken(response.token);
                 setUser(username);
@@ -54,7 +52,7 @@ export default function LoginForm() {
                 window.location.href = "/";
             })
             .catch((error: any) => {
-                if(error.response.status === 400) {
+                if(error.response?.status === 400) {
                     setError('root', { type: 'manual', message: 'Invalid credentials' });
                 }
                 setIsLoading(false);
@@ -83,7 +81,9 @@ export default function LoginForm() {
 
             <Button type="submit">Submit</Button>
 
-            <ForgotPassword>Forgot your password?</ForgotPassword>
+            <Tooltip text="Try with: eve.holt@reqres.in  cityslicka">
+                <ForgotPassword>Forgot your password?</ForgotPassword>
+            </Tooltip>
 
             {isLoading && <Loading />}
         </Form>

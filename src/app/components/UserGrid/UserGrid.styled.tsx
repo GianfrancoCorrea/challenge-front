@@ -6,7 +6,11 @@ export const UserGridContainer = styled.div`
     grid-gap: 20px;
     max-width: 1100px;
     width: 100%;
-    margin-top: 20px;
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        margin-top: 20px;
+    }
 `;
 
 export const UserCard = styled.div`
@@ -28,6 +32,10 @@ export const UserCard = styled.div`
         background-color: rgba(0, 0, 0, 0.03);
         border-bottom: 2px solid #ccc;
     `}
+
+    @media (max-width: 768px) {
+        padding: 10px;
+    }
 `;
 
 export const UserAvatar = styled.img`
@@ -35,6 +43,11 @@ export const UserAvatar = styled.img`
     height: 150px;
     border-radius: 50%;
     margin-bottom: 10px;
+
+    @media (max-width: 768px) {
+        width: 100px;
+        height: 100px;
+    }
 `;
 
 export const UserName = styled.h3`
@@ -47,7 +60,6 @@ export const UserEmail = styled.p`
     font-size: 14px;
     color: #333;
 `;
-
 
 export const DivFlex = styled.div`
     display: flex;

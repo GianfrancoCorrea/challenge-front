@@ -14,6 +14,11 @@ export const SidebarContainer = styled.div`
     border-left: 1px solid #ccc;
     transition: transform 0.2s ease-in-out;
     transform: ${({ $isSidebarOpen }) => ($isSidebarOpen ? 'translateX(0)' : 'translateX(100%)')};
+
+    @media (max-width: 768px) {
+        width: 100%;
+        transition: all 0.2s ease-in-out;
+    }
 `;
 
 export const SidebarTitle = styled.h2`

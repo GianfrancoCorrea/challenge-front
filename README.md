@@ -13,6 +13,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000).
 
+## Production deployment
+
+[challenge-front-nine.vercel.app](challenge-front-nine.vercel.app)
+
 ## Technologies Used
 
 - [Next.js](https://nextjs.org/) (React framework)
@@ -69,8 +73,22 @@ States handled with Redux-Toolkit:
 - [x] Posts
 - [ ] Albums
 
+Requests handled with Axios:
+- [x] [reqres](https://reqres.in/) (login | users)
+- [x] [jsonplaceholder](https://jsonplaceholder.typicode.com/) (posts)
+
 ## Screenshots
 
 ![Login](/screenshots/Login.png "Login")
 ![User List](/screenshots/UserList.png "User List")
 ![User Details](/screenshots/UserDetails.png "User Details")
+
+## Improvements
+
+- [x] add loading states
+- [x] add more animations
+- [x] mobile responsive
+- [x] session in local storage
+- [ ] add tests
+- [ ] error handling
+- [ ] remove next.js default styles (I kept those to save time)

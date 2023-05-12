@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 const isServer = typeof window === "undefined";
-
 const manageLocalStorage = {
     get: {
         token: !isServer ? localStorage.getItem("token") : null,
@@ -16,8 +15,6 @@ const manageLocalStorage = {
         user: () => !isServer ? localStorage.removeItem("user") : null
     }
 };
-
-
 
 const useLogin = () => {
     const [login, setLogin] = useState<boolean>(false);

@@ -34,6 +34,7 @@ export const Form = styled.form`
         font-size: 14px;
         color: #333;
         transition: border-bottom 0.2s ease-in-out;
+        border-bottom: 3px solid #cccccc75;
     }
 
     input:focus {

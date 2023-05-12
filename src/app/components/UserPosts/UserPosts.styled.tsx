@@ -12,7 +12,6 @@ export const PostWrapper = styled.div`
         padding: 0;
         margin: 0;
     }
-    
 `;
 
 export const PostStyled = styled.div`
@@ -22,6 +21,7 @@ export const PostStyled = styled.div`
     background-color: #fafafa;
 
 `;
+
 export const PostTitle = styled.h3`
     font-size: 14px;
     margin-bottom: 5px;
@@ -40,7 +40,6 @@ export const PostDivider = styled.hr`
     opacity: 0.2;
 `;
 
-
 export const TrashIconWrapper = styled.div`
     position: absolute;
     top: 40%;
@@ -54,7 +53,6 @@ export const TrashIconWrapper = styled.div`
         width: 20px;
         height: 20px;
         }
-
 
     ${PostStyled}:hover & {
         opacity: 1;
